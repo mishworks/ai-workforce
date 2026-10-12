@@ -10,6 +10,7 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty"
 import { ChatAvatar } from "@/components/chat-avatar"
+import { BotDialog } from "@/components/bot-dialog"
 
 export default async function Page() {
   await auth.protect()
@@ -28,10 +29,12 @@ export default async function Page() {
           </EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
-          <Button>
-            <PlusIcon data-icon="inline-start" />
-            Create a new bot
-          </Button>
+          <BotDialog>
+            <Button>
+              <PlusIcon data-icon="inline-start" />
+              Create a new bot
+            </Button>
+          </BotDialog>
         </EmptyContent>
       </Empty>
     </div>

@@ -1,3 +1,4 @@
+import { createInsertSchema } from "drizzle-zod";
 import { index, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const bots = pgTable(
@@ -14,3 +15,9 @@ export const bots = pgTable(
   },
   (t) => [index("bots_user_id_idx").on(t.userId)]
 );
+
+export const insertBotSchema = createInsertSchema(bots, {
+  name: (s) => s.min(1, "Name is required"),
+  job: (s) => s.min(1, "Job is required"),
+  avatar: (s) => s.min(1),
+}).omit({ id: true, userId: true, createdAt: true, sandboxId: true });
