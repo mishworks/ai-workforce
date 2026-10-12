@@ -10,3 +10,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ##Git 
 - Never create branches,worktress, or commits automatically. Only do so when the user explicitly asks for that specific action in the current request. 
 - Leave changes uncommitted in the working tree on the current branch and let the user decide when and how to commit. 
+
+##Database
+- This is a development project. There is no backwards compatibility and all data is worthless.
+- Always use `npm run db:push` to sync schema changes to the database. Never generate or run migration files.
+- Prefer data loss. Never backfill, migrate, or preserve existing rows. Never write code to keep old data working.
+- Every schema change is a clean slate. Drop and recreate freely.
