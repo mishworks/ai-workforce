@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
@@ -19,6 +20,7 @@ export async function createBot(
       db.insert(chats).values({ id: chatId, userId, kind: "direct" }),
       db.insert(chatMembers).values({ chatId, botId }),
     ]);
+    revalidatePath("/", "layout");
     return { success: true };
   } catch {
     return { success: false, error: "Failed to create bot." };

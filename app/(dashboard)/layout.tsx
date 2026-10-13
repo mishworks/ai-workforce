@@ -1,5 +1,6 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
+import { ChatList } from "@/components/chat-list"
 
 export default function DashboardLayout({
   children,
@@ -8,7 +9,7 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar chatList={<ChatList />} />
       <SidebarInset>{children}</SidebarInset>
     </SidebarProvider>
   )

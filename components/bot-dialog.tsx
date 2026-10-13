@@ -58,11 +58,14 @@ function randomSeed() {
 }
 
 interface BotDialogProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export function BotDialog({ children }: BotDialogProps) {
-  const [open, setOpen] = useState(false);
+export function BotDialog({ children, open: controlledOpen, onOpenChange }: BotDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const open = controlledOpen ?? internalOpen;
   const [seed, setSeed] = useState(() => randomSeed());
 
   const {
@@ -99,16 +102,18 @@ export function BotDialog({ children }: BotDialogProps) {
     const result = await createBot(data);
     if (result.success) {
       toast.add({ title: `${data.name} is ready`, type: "success" });
-      setOpen(false);
-      reset();
-      setSeed(randomSeed());
+      handleOpenChange(false);
     } else {
       toast.add({ title: result.error ?? "Failed to create bot", type: "error" });
     }
   }
 
   function handleOpenChange(next: boolean) {
-    setOpen(next);
+    if (onOpenChange) {
+      onOpenChange(next);
+    } else {
+      setInternalOpen(next);
+    }
     if (!next) {
       reset();
       const s = randomSeed();
@@ -119,7 +124,7 @@ export function BotDialog({ children }: BotDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger render={children as React.ReactElement} />
+      {children && <DialogTrigger render={children as React.ReactElement} />}
       <DialogContent showCloseButton className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>New bot</DialogTitle>
