@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { BotDialog } from "@/components/bot-dialog"
 
-export function AppSidebar({ chatList }: { chatList?: React.ReactNode }) {
+export function AppSidebar({ chatList, chatSearch }: { chatList?: React.ReactNode; chatSearch?: React.ReactNode }) {
   const [botDialogOpen, setBotDialogOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const closeTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
@@ -34,38 +34,41 @@ export function AppSidebar({ chatList }: { chatList?: React.ReactNode }) {
 
   return (
     <Sidebar>
-      <SidebarHeader className="flex flex-row items-center justify-end px-3 py-2">
-        <div
-          onMouseEnter={() => { cancelClose(); setDropdownOpen(true) }}
-          onMouseLeave={scheduleClose}
-        >
-          <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
-            <DropdownMenuTrigger
-              render={
-                <button className="flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
-                  <PlusIcon className="size-4" />
-                </button>
-              }
-            />
-            <DropdownMenuContent
-              side="bottom"
-              align="end"
-              className="w-44"
-              onMouseEnter={cancelClose}
-              onMouseLeave={scheduleClose}
-            >
-              <DropdownMenuItem onClick={() => setBotDialogOpen(true)}>
-                <PlusCircleIcon />
-                Create new bot
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <UsersIcon />
-                Create group chat
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+      <SidebarHeader className="flex flex-col gap-2 px-3 py-2">
+        <div className="flex justify-end">
+          <div
+            onMouseEnter={() => { cancelClose(); setDropdownOpen(true) }}
+            onMouseLeave={scheduleClose}
+          >
+            <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+              <DropdownMenuTrigger
+                render={
+                  <button className="flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+                    <PlusIcon className="size-4" />
+                  </button>
+                }
+              />
+              <DropdownMenuContent
+                side="bottom"
+                align="end"
+                className="w-44"
+                onMouseEnter={cancelClose}
+                onMouseLeave={scheduleClose}
+              >
+                <DropdownMenuItem onClick={() => setBotDialogOpen(true)}>
+                  <PlusCircleIcon />
+                  Create new bot
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <UsersIcon />
+                  Create group chat
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <BotDialog open={botDialogOpen} onOpenChange={setBotDialogOpen} />
         </div>
-        <BotDialog open={botDialogOpen} onOpenChange={setBotDialogOpen} />
+        {chatSearch}
       </SidebarHeader>
       <SidebarContent>{chatList}</SidebarContent>
       <SidebarFooter>
