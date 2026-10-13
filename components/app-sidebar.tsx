@@ -10,6 +10,7 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
+  SidebarRail,
 } from "@/components/ui/sidebar"
 import {
   DropdownMenu,
@@ -33,9 +34,10 @@ export function AppSidebar({ chatList, chatSearch }: { chatList?: React.ReactNod
   }
 
   return (
-    <Sidebar>
-      <SidebarHeader className="flex flex-col gap-2 px-3 py-2">
-        <div className="flex justify-end">
+    <Sidebar collapsible="icon">
+      <SidebarRail />
+      <SidebarHeader className="flex flex-col gap-2 px-3 py-2 group-data-[collapsible=icon]:px-2">
+        <div className="flex justify-end group-data-[collapsible=icon]:justify-center">
           <div
             onMouseEnter={() => { cancelClose(); setDropdownOpen(true) }}
             onMouseLeave={scheduleClose}
@@ -66,8 +68,8 @@ export function AppSidebar({ chatList, chatSearch }: { chatList?: React.ReactNod
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <BotDialog open={botDialogOpen} onOpenChange={setBotDialogOpen} />
         </div>
+        <BotDialog open={botDialogOpen} onOpenChange={setBotDialogOpen} />
         {chatSearch}
       </SidebarHeader>
       <SidebarContent>{chatList}</SidebarContent>

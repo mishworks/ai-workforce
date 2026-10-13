@@ -35,11 +35,11 @@ export function ChatSearchDialog({ chats }: { chats: ChatListItem[] }) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex h-8 w-full items-center gap-2 rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+        className="flex h-8 w-full items-center gap-2 rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:rounded-md group-data-[collapsible=icon]:border-0 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:justify-center"
       >
-        <SearchIcon className="size-3.5 shrink-0" />
-        <span className="flex-1 truncate text-left">Search</span>
-        <KbdGroup>
+        <SearchIcon className="size-3.5 shrink-0 group-data-[collapsible=icon]:size-4" />
+        <span className="flex-1 truncate text-left group-data-[collapsible=icon]:hidden">Search</span>
+        <KbdGroup className="group-data-[collapsible=icon]:hidden">
           <Kbd>⌘</Kbd>
           <Kbd>K</Kbd>
         </KbdGroup>

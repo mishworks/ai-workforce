@@ -1,13 +1,11 @@
-import Link from "next/link";
 import { formatDistanceToNowStrict } from "date-fns";
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuItem,
-  SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { ChatAvatar } from "@/components/chat-avatar";
+import { ChatListItem } from "@/components/chat-list-item";
 import { getUserChats } from "@/queries/chats";
 
 export async function ChatList() {
@@ -18,7 +16,7 @@ export async function ChatList() {
   return (
     <SidebarGroup>
       <SidebarGroupContent>
-        <SidebarMenu>
+        <SidebarMenu className="gap-0.5 group-data-[collapsible=icon]:gap-2">
           {chats.map((chat) => {
             const displayName = chat.name ?? chat.bot?.name ?? "Chat";
             const seed = chat.bot?.avatar ?? "default";
@@ -26,24 +24,13 @@ export async function ChatList() {
 
             return (
               <SidebarMenuItem key={chat.id}>
-                <SidebarMenuButton render={<Link href={`/chats/${chat.id}`} />} className="h-auto items-center gap-3 py-2">
-                    <ChatAvatar seed={seed} className="size-8 shrink-0 rounded-lg" />
-                    <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="truncate text-sm font-medium leading-none text-sidebar-foreground">
-                          {displayName}
-                        </span>
-                        <span className="shrink-0 text-xs text-sidebar-foreground/50">
-                          {timeAgo}
-                        </span>
-                      </div>
-                      {chat.lastMessagePreview && (
-                        <span className="truncate text-xs text-sidebar-foreground/50">
-                          {chat.lastMessagePreview}
-                        </span>
-                      )}
-                    </div>
-                </SidebarMenuButton>
+                <ChatListItem
+                  id={chat.id}
+                  displayName={displayName}
+                  seed={seed}
+                  timeAgo={timeAgo}
+                  lastMessagePreview={chat.lastMessagePreview}
+                />
               </SidebarMenuItem>
             );
           })}

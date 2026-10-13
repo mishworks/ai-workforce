@@ -1,3 +1,4 @@
+import { cookies } from "next/headers"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { ChatList } from "@/components/chat-list"
@@ -9,10 +10,11 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
-  const chats = await getUserChats()
+  const [chats, cookieStore] = await Promise.all([getUserChats(), cookies()])
+  const sidebarOpen = cookieStore.get("sidebar_state")?.value !== "false"
 
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={sidebarOpen}>
       <AppSidebar
         chatList={<ChatList />}
         chatSearch={<ChatSearchDialog chats={chats} />}

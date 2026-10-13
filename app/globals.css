@@ -173,6 +173,16 @@
   min-width: 0 !important;
 }
 
+[data-collapsible=icon] .sidebar-user-btn .cl-userButtonTrigger {
+  width: 2rem !important;
+  padding: 0.5rem !important;
+  justify-content: center !important;
+}
+
+[data-collapsible=icon] .sidebar-user-btn .cl-userButtonOuterIdentifier {
+  display: none !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
