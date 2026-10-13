@@ -6,7 +6,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { ChatListItem } from "@/components/chat-list-item";
-import { getUserChats } from "@/queries/chats";
+import { getUserChats } from "@/queries";
 
 export async function ChatList() {
   const chats = await getUserChats();

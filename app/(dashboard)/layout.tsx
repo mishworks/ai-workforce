@@ -3,7 +3,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { ChatList } from "@/components/chat-list"
 import { ChatSearchDialog } from "@/components/chat-search-dialog"
-import { getUserChats } from "@/queries/chats"
+import { getUserChats } from "@/queries"
 
 export default async function DashboardLayout({
   children,

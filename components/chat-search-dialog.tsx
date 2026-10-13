@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/command"
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
 import { ChatAvatar } from "@/components/chat-avatar"
-import type { ChatListItem } from "@/queries/chats"
+import type { ChatListItem } from "@/queries"
 
 export function ChatSearchDialog({ chats }: { chats: ChatListItem[] }) {
   const [open, setOpen] = useState(false)

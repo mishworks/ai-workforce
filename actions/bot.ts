@@ -2,9 +2,46 @@
 
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
+import { eq, and } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { bots, chats, chatMembers, insertBotSchema } from "@/lib/schema";
+
+export async function updateBot(
+  botId: string,
+  data: z.infer<typeof insertBotSchema>
+): Promise<{ success: boolean; error?: string }> {
+  const { userId } = await auth.protect();
+
+  try {
+    await db
+      .update(bots)
+      .set(data)
+      .where(and(eq(bots.id, botId), eq(bots.userId, userId)));
+
+    revalidatePath("/", "layout");
+    return { success: true };
+  } catch {
+    return { success: false, error: "Failed to update bot." };
+  }
+}
+
+export async function deleteBot(
+  botId: string
+): Promise<{ success: boolean; error?: string }> {
+  const { userId } = await auth.protect();
+
+  try {
+    await db
+      .delete(bots)
+      .where(and(eq(bots.id, botId), eq(bots.userId, userId)));
+
+    revalidatePath("/", "layout");
+    return { success: true };
+  } catch {
+    return { success: false, error: "Failed to delete bot." };
+  }
+}
 
 export async function createBot(
   data: z.infer<typeof insertBotSchema>

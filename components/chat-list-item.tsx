@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { SidebarMenuButton, useSidebar } from "@/components/ui/sidebar"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { ChatAvatar } from "@/components/chat-avatar"
@@ -16,9 +17,11 @@ interface ChatListItemProps {
 export function ChatListItem({ id, displayName, seed, timeAgo, lastMessagePreview }: ChatListItemProps) {
   const { state, isMobile } = useSidebar()
   const isIconMode = state === "collapsed" && !isMobile
+  const pathname = usePathname()
+  const isActive = pathname === `/chats/${id}`
 
   const button = (
-    <SidebarMenuButton render={<Link href={`/chats/${id}`} />} size="lg" className="h-auto items-center gap-3 py-2">
+    <SidebarMenuButton render={<Link href={`/chats/${id}`} />} size="lg" isActive={isActive} className="h-auto items-center gap-3 py-2">
       <ChatAvatar seed={seed} className="size-8 shrink-0 rounded-lg" />
       <div className="flex min-w-0 flex-1 flex-col gap-0.5">
         <div className="flex items-center justify-between gap-2">
