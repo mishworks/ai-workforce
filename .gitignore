@@ -41,3 +41,7 @@ next-env.d.ts
 .neon
 
 .trigger
+# local-only
+doc/
+.claude/settings.json
+.claude/skills/trigger-authoring-chat-agent/
